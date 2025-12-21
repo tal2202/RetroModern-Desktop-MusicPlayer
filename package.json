@@ -1,0 +1,15 @@
+
+{
+  "name": "retromodern-player",
+  "version": "1.0.0",
+  "description": "Retro Music Player with Gemini Insights",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
