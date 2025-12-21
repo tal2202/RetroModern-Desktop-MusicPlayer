@@ -1,5 +1,6 @@
 {
   "name": "RetroModern Player",
-  "description": "A high-fidelity, retro-inspired music player built for the modern web. Features a compact Winamp-style UI, local file playback, real-time frequency visualization, and Gemini-powered track insights.",
+  "description": "a retro music player",
+  "version": "beta-0.0.1",
   "requestFramePermissions": []
 }

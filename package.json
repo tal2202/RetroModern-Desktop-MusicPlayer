@@ -1,8 +1,8 @@
 
 {
   "name": "retromodern-player",
-  "version": "1.0.0",
-  "description": "Retro Music Player with Gemini Insights",
+  "version": "beta-0.0.1",
+  "description": "Retro Music Player",
   "main": "main.js",
   "type": "module",
   "scripts": {
