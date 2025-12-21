@@ -1,6 +1,6 @@
 {
   "name": "RetroModern Player",
   "description": "a retro music player",
-  "version": "beta-0.0.1",
+  "version": "1.0.0",
   "requestFramePermissions": []
 }

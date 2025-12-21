@@ -207,7 +207,7 @@ const App: React.FC = () => {
               setPlayerState(prev => ({ ...prev, isPlaying: false, currentTime: 0 }));
             }} icon="fa-solid fa-stop" />
             <RetroButton onClick={nextTrack} icon="fa-solid fa-forward-step" />
-            <RetroButton onClick={() => document.getElementById('file-upload')?.click()} icon="fa-solid fa-plus" className="ml-2" />
+            <RetroButton onClick={() => document.getElementById('file-upload')?.click()} icon="fa-regular fa-folder-open" className="ml-2" />
             <input id="file-upload" type="file" multiple accept="audio/*" className="hidden" onChange={handleFileUpload} />
           </div>
           <div className="flex gap-1 items-center">
