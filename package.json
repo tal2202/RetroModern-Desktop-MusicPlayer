@@ -4,12 +4,23 @@
   "version": "1.0.0",
   "description": "Retro Music Player with Gemini Insights",
   "main": "main.js",
+  "type": "module",
   "scripts": {
+    "dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "vite build && electron-builder"
   },
   "devDependencies": {
     "electron": "^31.0.0",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "vite": "^5.0.0",
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "recharts": "^3.6.0",
+    "@google/genai": "^1.34.0"
   }
 }

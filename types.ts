@@ -1,4 +1,3 @@
-
 export interface Track {
   id: string;
   title: string;
@@ -22,10 +21,4 @@ export enum RepeatMode {
   NONE = 'NONE',
   ONE = 'ONE',
   ALL = 'ALL'
-}
-
-export interface GeminiInsight {
-  mood: string;
-  factoid: string;
-  genreVibe: string;
 }
