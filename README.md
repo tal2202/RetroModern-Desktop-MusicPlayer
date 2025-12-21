@@ -1,4 +1,6 @@
+# Retro (yet) Modern music player! 
 
+![Screenshot](assets/logo.png)
 
 
 ![Screenshot](Images/Screenshot%202025-12-21%20at%2013.56.10.png)

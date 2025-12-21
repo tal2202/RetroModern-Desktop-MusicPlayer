@@ -1,4 +1,3 @@
-
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -10,7 +9,8 @@ function createWindow() {
     width: 512,
     height: 485,
     frame: false, // Frameless for retro look
-    resizable: false, // Keep it fixed like classic players
+    resizable: false, // Keep it fixed like classic players,
+    icon: path.join(__dirname, 'assets/icon.png'), // Replace 'assets/icon.png' with your actual icon file path
     backgroundColor: '#1a1a1a',
     webPreferences: {
       nodeIntegration: false,
