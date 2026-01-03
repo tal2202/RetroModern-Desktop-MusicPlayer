@@ -8,11 +8,11 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 512,
     height: 485,
-    frame: false, // Frameless for retro look
+    frame: false, // Frameless for retro look ?
     resizable: false, // Keep it fixed like classic players,
-    icon: path.join(__dirname, 'assets/icon.png'), // Replace 'assets/icon.png' with your actual icon file path
+    icon: path.join(__dirname, 'assets/icon.png'), 
     backgroundColor: '#1a1a1a',
-    webPreferences: {
+    webPreferences: { 
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.cjs')

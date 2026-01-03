@@ -3,6 +3,9 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Track, PlayerState, RepeatMode } from './types';
 import RetroButton from './components/RetroButton';
 import Visualizer from './components/Visualizer';
+import { fetchJamedoRandomSongs } from './services/jamedo_music_service';
+
+
 
 declare global {
   interface Window {
@@ -89,6 +92,22 @@ const App: React.FC = () => {
     if (tracks.length === 0) return;
     const nextIdx = (playerState.currentTrackIndex !== null ? playerState.currentTrackIndex + 1 : 0) % tracks.length;
     playTrack(nextIdx);
+  }, [playerState.currentTrackIndex, tracks.length]);
+
+const handleSoundCloud = useCallback(() => {
+    console.log("Adding reandom track from jamendo as replacement for SoundCloud...");
+    fetchJamedoRandomSongs().then(newTrack => {
+      setTracks(prev => [...prev, newTrack]);
+      if (playerState.currentTrackIndex === null) {
+        playTrack(0);
+      }
+    }).catch(err => {
+      console.error("Failed to fetch track from Jamedo:", err);
+    });
+  }, [playerState.currentTrackIndex, tracks.length]);
+
+  const handleUnsupported = useCallback(() => {
+    console.warn("This feature is not supported yet.");
   }, [playerState.currentTrackIndex, tracks.length]);
 
   const prevTrack = () => {
@@ -209,6 +228,9 @@ const App: React.FC = () => {
             <RetroButton onClick={nextTrack} icon="fa-solid fa-forward-step" />
             <RetroButton onClick={() => document.getElementById('file-upload')?.click()} icon="fa-regular fa-folder-open" className="ml-2" />
             <input id="file-upload" type="file" multiple accept="audio/*" className="hidden" onChange={handleFileUpload} />
+             <RetroButton onClick={handleSoundCloud} icon="fa-solid" className="fa-brands fa-soundcloud" title="Add music from SoundCloud"/>
+             <RetroButton onClick={handleUnsupported} icon="fa-solid" className="fa-brands fa-spotify" title="Spotify -Not supported yet" />
+             <RetroButton onClick={handleUnsupported} icon="fa-solid" className="fa-brands fa-apple" title="Apple Music - Not supported yet" />
           </div>
           <div className="flex gap-1 items-center">
             <RetroButton onClick={() => setPlayerState(prev => ({ ...prev, isShuffled: !prev.isShuffled }))} icon="fa-solid fa-shuffle" active={playerState.isShuffled} />
