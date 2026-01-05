@@ -44,7 +44,7 @@ const App: React.FC = () => {
   }
 }, []);
   const initAudioContext = useCallback(async (trackType?: 'local' | 'remote') => {
-  // If remote: ensure WebAudio is OFF so remote playback can work
+  // If remote: ensure WebAudio is OFF so remote playback can work -> workaround for CORS/audio issues
   if (trackType !== 'local') {
     await teardownAudioContext();
     return;
