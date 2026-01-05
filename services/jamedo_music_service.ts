@@ -1,5 +1,5 @@
 import {Track} from '../types';
-const JAMEDO_CLIENT_ID = 'e58bb8c7';
+const JAMEDO_CLIENT_ID = 'e58bb8c';
 
 
 export async function fetchJamedoRandomSongs(): Promise<Track> {
