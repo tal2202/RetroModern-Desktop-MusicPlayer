@@ -239,7 +239,7 @@ const handleSoundCloud = useCallback(() => {
             <RetroButton onClick={nextTrack} icon="fa-solid fa-forward-step" />
             <RetroButton onClick={() => document.getElementById('file-upload')?.click()} icon="fa-regular fa-folder-open" className="ml-2" />
             <input id="file-upload" type="file" multiple accept="audio/*" className="hidden" onChange={handleFileUpload} />
-             <RetroButton onClick={handleSoundCloud} icon="fa-solid" className="fa-brands fa-soundcloud" title="Add music from SoundCloud"/>
+             <RetroButton onClick={handleSoundCloud} icon="fa-solid" className="fa-brands fa-soundcloud" title="Stream random relaxing bits"/>
              <RetroButton onClick={handleUnsupported} icon="fa-solid" className="fa-brands fa-spotify" title="Spotify -Not supported yet" />
              <RetroButton onClick={handleUnsupported} icon="fa-solid" className="fa-brands fa-apple" title="Apple Music - Not supported yet" />
           </div>
