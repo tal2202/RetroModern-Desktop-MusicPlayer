@@ -31,11 +31,28 @@ const App: React.FC = () => {
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
 
-const initAudioContext = useCallback((trackType?: 'local' | 'remote') => {
-  // Only enable equalizer for local files - workaround for CORS issues with remote files
-  if (trackType !== 'local') return;
 
-  if (!audioContextRef.current && audioRef.current) {
+  const teardownAudioContext = useCallback(async () => {
+  try { sourceRef.current?.disconnect(); } catch {}
+  try { analyserRef.current?.disconnect(); } catch {}
+  sourceRef.current = null;
+  analyserRef.current = null;
+
+  if (audioContextRef.current) {
+    try { await audioContextRef.current.close(); } catch {}
+    audioContextRef.current = null;
+  }
+}, []);
+  const initAudioContext = useCallback(async (trackType?: 'local' | 'remote') => {
+  // If remote: ensure WebAudio is OFF so remote playback can work
+  if (trackType !== 'local') {
+    await teardownAudioContext();
+    return;
+  }
+
+  if (!audioRef.current) return;
+
+  if (!audioContextRef.current) {
     const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
     audioContextRef.current = new AudioContextClass();
 
@@ -44,15 +61,15 @@ const initAudioContext = useCallback((trackType?: 'local' | 'remote') => {
 
     sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
 
-    // Keep your original wiring (since local works for you)
+    // Your existing wiring (local works for you)
     sourceRef.current.connect(analyserRef.current);
     analyserRef.current.connect(audioContextRef.current.destination);
   }
 
   if (audioContextRef.current?.state === 'suspended') {
-    audioContextRef.current.resume();
+    await audioContextRef.current.resume();
   }
-}, []);
+}, [teardownAudioContext]);
 
 
   const handleWindowControl = (action: 'minimize' | 'maximize' | 'close') => {
