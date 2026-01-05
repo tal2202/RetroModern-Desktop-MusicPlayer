@@ -31,20 +31,29 @@ const App: React.FC = () => {
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
 
-  const initAudioContext = useCallback(() => {
-    if (!audioContextRef.current && audioRef.current) {
-      const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
-      audioContextRef.current = new AudioContextClass();
-      analyserRef.current = audioContextRef.current.createAnalyser();
-      analyserRef.current.fftSize = 64;
-      sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
-      sourceRef.current.connect(analyserRef.current);
-      analyserRef.current.connect(audioContextRef.current.destination);
-    }
-    if (audioContextRef.current?.state === 'suspended') {
-      audioContextRef.current.resume();
-    }
-  }, []);
+const initAudioContext = useCallback((trackType?: 'local' | 'remote') => {
+  // Only enable equalizer for local files - workaround for CORS issues with remote files
+  if (trackType !== 'local') return;
+
+  if (!audioContextRef.current && audioRef.current) {
+    const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
+    audioContextRef.current = new AudioContextClass();
+
+    analyserRef.current = audioContextRef.current.createAnalyser();
+    analyserRef.current.fftSize = 64;
+
+    sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
+
+    // Keep your original wiring (since local works for you)
+    sourceRef.current.connect(analyserRef.current);
+    analyserRef.current.connect(audioContextRef.current.destination);
+  }
+
+  if (audioContextRef.current?.state === 'suspended') {
+    audioContextRef.current.resume();
+  }
+}, []);
+
 
   const handleWindowControl = (action: 'minimize' | 'maximize' | 'close') => {
     if (window.electronAPI) {
@@ -74,19 +83,21 @@ const App: React.FC = () => {
     }
   };
 
-  const playTrack = (index: number) => {
-    initAudioContext();
-    setPlayerState(prev => ({ ...prev, currentTrackIndex: index, isPlaying: true }));
-  };
+const playTrack = (index: number) => {
+  initAudioContext(tracks[index]?.type); 
+  setPlayerState(prev => ({ ...prev, currentTrackIndex: index, isPlaying: true }));
+};
 
-  const togglePlay = () => {
-    if (playerState.currentTrackIndex === null && tracks.length > 0) {
-      playTrack(0);
-      return;
-    }
-    initAudioContext();
-    setPlayerState(prev => ({ ...prev, isPlaying: !prev.isPlaying }));
-  };
+const togglePlay = () => {
+  if (playerState.currentTrackIndex === null && tracks.length > 0) {
+    playTrack(0);
+    return;
+  }
+  initAudioContext(currentTrack?.type);
+  setPlayerState(prev => ({ ...prev, isPlaying: !prev.isPlaying }));
+};
+
+
 
   const nextTrack = useCallback(() => {
     if (tracks.length === 0) return;
