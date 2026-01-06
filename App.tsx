@@ -44,7 +44,7 @@ const initAudioContext = useCallback((trackType?: 'local' | 'remote') => {
 
     sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
 
-    // Keep your original wiring (since local works for you)
+    // Keep your original wiring as local files works fine
     sourceRef.current.connect(analyserRef.current);
     analyserRef.current.connect(audioContextRef.current.destination);
   }
