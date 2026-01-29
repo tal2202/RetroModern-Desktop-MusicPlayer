@@ -40,7 +40,7 @@ const initAudioContext = useCallback((trackType?: 'local' | 'remote') => {
     audioContextRef.current = new AudioContextClass();
 
     analyserRef.current = audioContextRef.current.createAnalyser();
-    analyserRef.current.fftSize = 64;
+    analyserRef.current.fftSize = 64; 
 
     sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
 
@@ -79,7 +79,7 @@ const initAudioContext = useCallback((trackType?: 'local' | 'remote') => {
 
     setTracks(prev => [...prev, ...newTracks]);
     if (playerState.currentTrackIndex === null && newTracks.length > 0) {
-      playTrack(0);
+      playTrack();
     }
   };
 
