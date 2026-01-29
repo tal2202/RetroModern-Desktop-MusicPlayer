@@ -79,7 +79,7 @@ const initAudioContext = useCallback((trackType?: 'local' | 'remote') => {
 
     setTracks(prev => [...prev, ...newTracks]);
     if (playerState.currentTrackIndex === null && newTracks.length > 0) {
-      playTrack();
+      playTrack(0);
     }
   };
 
